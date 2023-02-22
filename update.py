@@ -1,3 +1,5 @@
+# how to update a data from database by Leonardo Rodrigues
+
 import mysql.connector
 import datetime
 

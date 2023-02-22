@@ -1,3 +1,5 @@
+# how to inset a data to database by Leonardo Rodrigues
+
 import mysql.connector
 import datetime
 

@@ -10,7 +10,7 @@ class CrudMysql:
         self.database = database
 
     def connect(self):
-        if(self.host==None or self.user==None or self.password==None or self.database==None):
+        if(self.host is None or self.user is None or self.password is None or self.database is None):
             print("Error: don't init the object. Plase, check the arguments correctly.")
             return
 
@@ -32,11 +32,12 @@ class CrudMysql:
             print('Error: name or email is None.')
             return
 
+        if(date is None):
+            date = datetime.datetime.today()
+        
         cursor = self.connection.cursor()
         sql = "INSERT INTO users (name, email, created) VALUES (%s,%s,%s)"
 
-        if(date is None):
-            date = datetime.datetime.today()
 
         data = (name, email, date)
         cursor.execute(sql, data)
@@ -59,21 +60,21 @@ class CrudMysql:
 
         return results
 
-    def update(self, id=None, user=None, email=None):
-        # update user and email to database
+    def update(self, id=None, name=None, email=None):
+        # update name and email to database
         cursor = self.connection.cursor()
 
-        if(user is not None and email is not None):        
+        if(name is not None and email is not None):        
             sql = "UPDATE users SET name=%s, email=%s WHERE id=%s"
-            data = (user, email, id)
+            data = (name, email, id)
         
-        if(user is None):
+        if(name is None):
             sql = "UPDATE users SET email=%s WHERE id=%s"
             data = (email, id)
         
         if(email is None):
             sql = "UPDATE users SET name=%s WHERE id=%s"
-            data = (user, id)
+            data = (name, id)
 
         cursor.execute(sql, data)
         self.connection.commit()
